@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const Post = require('../models/Post');
 
 
@@ -29,11 +30,12 @@ exports.create = async(req, res) => {
 	}
 }
 
+// http://localhost:4000/api/v1/post/1
 exports.search = async(req, res) => {
 	try {
 		const {id} = req.params;
 
-		const post = await Post.findAll({
+		const post = await Post.findOne({
 			where:{
 				id: id
 			}
@@ -79,3 +81,18 @@ exports.delete = async(req, res) => {
 		throw new Error('Noooo');
 	}
 }
+
+
+//otra forma de eliminar
+exports.deletePost = async (req, res, next) => {
+    const id = req.params['id'];
+    if (!id) res.status(404).json({ message: `Post not found` });
+    Post.findOne({ where: { id } })
+        .then(result => {
+            if (result)
+                return result.destroy()
+            return res.status(404).json({ message: `Post not found` });
+        })
+        .then(() => res.status(200).json({ message: `Post with id ${id} is deleted successfully` }))
+        .catch(error => res.status(500).json(error));
+};
