@@ -2,7 +2,7 @@ const express = require('express');
 const route = express.Router();
 const PostController = require('../controllers/PostController');
 
-route.get('/', PostController.listar);
+route.get('/', PostController.show);
 
 route.post('/', PostController.create);
 

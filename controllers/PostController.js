@@ -1,7 +1,7 @@
 const Post = require('../models/Post');
 
 
-exports.listar = async(req, res) =>{
+exports.show = async(req, res) =>{
 	try {
 		const posts = await Post.findAll();
 
@@ -32,7 +32,6 @@ exports.create = async(req, res) => {
 exports.search = async(req, res) => {
 	try {
 		const {id} = req.params;
-	 
 
 		const post = await Post.findAll({
 			where:{
@@ -49,16 +48,33 @@ exports.search = async(req, res) => {
 
 
 exports.update = async(req, res) => {
+	const {id} = req.params;
+	const {title} = req.body;
+
 	try {
-		
+		const post = await Post.update({title: title},{
+			where:{
+				id: id
+			}
+		});
+
+		console.log('Post Actualizado ✔️');
+		res.json(post);
+
 	} catch (error) {
 		throw new Error('noooo');
 	}
 }
 
 exports.delete = async(req, res) => {
+	const {id} = req.params;
 	try {
-		
+		const post = await Post.destroy({
+			where:{
+				id:id
+			}
+		});
+		res.json(post);
 	} catch (error) {
 		throw new Error('Noooo');
 	}
