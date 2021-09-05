@@ -1,0 +1,11 @@
+------------------------
+
+yt:  https://www.youtube.com/watch?v=JpH4TYFKnyc
+
+-----------------------
+-- ver tipos de consultas en los modelos
+
+https://sequelize.org/master/manual/model-querying-basics.html#simple-select-queries
+------------------------
+
+>npm i sqlite3 sequelize
